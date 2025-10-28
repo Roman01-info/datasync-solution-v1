@@ -134,6 +134,7 @@ const SectionTitle: React.FC<{ children: React.ReactNode }> = ({
 
 const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleScroll = useCallback(() => {
     const offset = window.scrollY;
@@ -154,41 +155,100 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/80 backdrop-blur-sm shadow-md" : "bg-info"
+        scrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-white/90 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="text-2xl font-bold text-gray-800">
-            DataSync <span className="text-blue-600">Solution</span>
+        <div className="flex justify-between items-center h-20">
+          <div className="text-2xl font-bold">
+            <span className="text-gray-800">DataSync</span>{" "}
+            <span className="text-blue-600">Solution</span>
           </div>
-          <nav className="hidden md:flex space-x-8">
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
             <a
               href="#about"
-              className="text-gray-600 hover:text-blue-600 font-medium"
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-blue-50"
             >
               আমরা কে
             </a>
             <a
               href="#problems"
-              className="text-gray-600 hover:text-blue-600 font-medium"
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-blue-50"
             >
               সমস্যা
             </a>
             <a
               href="#process"
-              className="text-gray-600 hover:text-blue-600 font-medium"
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-blue-50"
             >
               কার্যপ্রণালী
             </a>
             <a
               href="#faq"
-              className="text-gray-600 hover:text-blue-600 font-medium"
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-blue-50"
             >
               জিজ্ঞাসা
             </a>
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors duration-200">
+              যোগাযোগ
+            </button>
           </nav>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-200">
+            <div className="flex flex-col space-y-2">
+              <a
+                href="#about"
+                className="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md hover:bg-blue-50 transition-colors duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                আমরা কে
+              </a>
+              <a
+                href="#problems"
+                className="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md hover:bg-blue-50 transition-colors duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                সমস্যা
+              </a>
+              <a
+                href="#process"
+                className="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md hover:bg-blue-50 transition-colors duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                কার্যপ্রণালী
+              </a>
+              <a
+                href="#faq"
+                className="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md hover:bg-blue-50 transition-colors duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                জিজ্ঞাসা
+              </a>
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors duration-200 mt-2 mx-3">
+                যোগাযোগ
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
@@ -196,7 +256,7 @@ const Header: React.FC = () => {
 
 const Hero: React.FC = () => (
   <div
-    className="relative h-screen bg-cover bg-center"
+    className="relative h-96 md:h-[500px] bg-cover bg-center"
     style={{
       backgroundImage:
         "url('https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1920&h=1080&fit=crop')",
